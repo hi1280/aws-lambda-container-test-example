@@ -5,7 +5,7 @@ import os
 @pytest.mark.usefixtures("read_event")
 class TestReadS3Event:
     def test_bucket(self, read_event):
-        assert read_event[0] == "tf-serverless-tosh2230"
+        assert read_event[0] == "lambda-test-example"
 
     def test_key(self, read_event):
         assert read_event[1] == "c01.csv"
