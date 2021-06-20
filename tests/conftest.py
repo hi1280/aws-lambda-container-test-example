@@ -7,13 +7,13 @@ from src.pq_converter import LambdaProcessor
 
 pq_path = "./tests/data/c01.parquet"
 
-
 @pytest.fixture(scope="session")
 def processor():
     with open("./tests/data/s3_event.json", "r") as f:
         test_event = json.load(f)
 
-    s3 = boto3.resource("s3", endpoint_url="http://localhost:4566")
+    session = boto3.Session(profile_name="localstack")
+    s3 = session.resource("s3", endpoint_url="http://localstack:4566")
     processor = LambdaProcessor(event=test_event, context={}, s3=s3)
     return processor
 

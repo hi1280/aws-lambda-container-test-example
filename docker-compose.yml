@@ -1,10 +1,23 @@
-version: '2.1'
+version: '3'
 
 services:
+  development:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/work
+    depends_on:
+      - lambda
+  lambda:
+    build: ./
+    ports:
+      - 9000:8080
+    depends_on:
+      - localstack
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
     image: localstack/localstack
-    network_mode: bridge
+    # network_mode: bridge
     ports:
       - "4566:4566"
       - "4571:4571"
@@ -18,7 +31,7 @@ services:
       - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
       - DOCKER_HOST=unix:///var/run/docker.sock
       - HOST_TMP_FOLDER=${TMPDIR}
-      - LAMBDA_DOCKER_NETWORK=host
+      # - LAMBDA_DOCKER_NETWORK=host
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
