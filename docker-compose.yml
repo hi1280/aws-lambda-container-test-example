@@ -22,7 +22,6 @@ services:
       - localstack
   localstack:
     image: localstack/localstack
-    # network_mode: bridge
     ports:
       - "4566:4566"
       - "4571:4571"
@@ -36,7 +35,6 @@ services:
       - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
       - DOCKER_HOST=unix:///var/run/docker.sock
       - HOST_TMP_FOLDER=${TMPDIR}
-      # - LAMBDA_DOCKER_NETWORK=host
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
