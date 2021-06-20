@@ -13,6 +13,11 @@ services:
     build: ./
     ports:
       - 9000:8080
+    environment:
+      - ENDPOINT_URL=http://localstack:4566
+      - ENV=development
+      - AWS_ACCESS_KEY_ID=_
+      - AWS_SECRET_ACCESS_KEY=_
     depends_on:
       - localstack
   localstack:
